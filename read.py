@@ -8,8 +8,18 @@ import requests
 load_dotenv()
 readwise_token = os.getenv('READWISE_TOKEN')
 
+#### Helpers
 
-def fetch_highlights(token=readwise_token, updated_after_days=None):
+gap = '\n-------------------\n'+'-------------------\n'
+
+def formatted_print(input_json):
+    print(gap)
+    print(json.dumps(input_json, indent=4))
+    print(gap)
+
+
+####
+def fetch_highlights(updated_after_days=None, token=readwise_token):
     full_data = []
     next_page_cursor = None
     while True:
@@ -32,8 +42,20 @@ def fetch_highlights(token=readwise_token, updated_after_days=None):
             break
     return full_data
 
+def extract_highlights(highlights):
+    aggregated_highlights = []
+    for book in highlights:
+        print(book['title'])
+        formatted_print(book)
+        for h in book['highlights']:
+            h['title'] = book['title']
+            h['author'] = book['author']
+            h['book_unique_url'] = book['unique_url']
+            h['book_readwise_url'] = book['readwise_url']
+            aggregated_highlights.append(h)
+    formatted_print(aggregated_highlights[0])
+    return aggregated_highlights
+
 if __name__ == "__main__":
-    highlights = fetch_highlights(readwise_token, 1)
-    print(json.dumps(highlights[0], indent=4))
-    for h in highlights:
-        print(h["title"])
+    highlights = fetch_highlights(1)
+    extract_highlights(highlights)
