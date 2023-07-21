@@ -17,6 +17,11 @@ def formatted_print(input_json):
     print(json.dumps(input_json, indent=4))
     print(gap)
 
+def write_to_file(file_name, data):
+    # Use the json.dump method to write the JSON object to a file
+    with open(file_name, 'w') as json_file:
+        json.dump(data, json_file)
+
 
 ####
 def fetch_highlights(updated_after_days=None, token=readwise_token):
@@ -46,16 +51,14 @@ def extract_highlights(highlights):
     aggregated_highlights = []
     for book in highlights:
         print(book['title'])
-        formatted_print(book)
         for h in book['highlights']:
             h['title'] = book['title']
             h['author'] = book['author']
             h['book_unique_url'] = book['unique_url']
             h['book_readwise_url'] = book['readwise_url']
             aggregated_highlights.append(h)
-    formatted_print(aggregated_highlights[0])
     return aggregated_highlights
 
 if __name__ == "__main__":
     highlights = fetch_highlights(1)
-    extract_highlights(highlights)
+    formatted_print(extract_highlights(highlights))
