@@ -20,7 +20,7 @@ def formatted_print(input_json):
 def write_to_file(file_name, data):
     # Use the json.dump method to write the JSON object to a file
     with open(file_name, 'w') as json_file:
-        json.dump(data, json_file)
+        json.dump(data, json_file, indent=4)
 
 
 ####
@@ -61,4 +61,5 @@ def extract_highlights(highlights):
 
 if __name__ == "__main__":
     highlights = fetch_highlights(1)
-    formatted_print(extract_highlights(highlights))
+    extracted_highlights = extract_highlights(highlights)
+    write_to_file('output_test.json', extracted_highlights)

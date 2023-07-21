@@ -1,5 +1,5 @@
-# Remove JSON file used to track output
-output.json
+# Remove JSON file used to test
+*test.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
